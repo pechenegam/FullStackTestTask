@@ -27,3 +27,12 @@ ____
 | /api/v1/conversions | authorized users | POST |
 | /api/v1/conversions/all | authorized users | GET |
 | /api/v1/exchange | authorized users  | GET |
+____
+## application.properties file
+in the line of the properties file
+```
+ exchange.cron=0 0 17 ? * *
+ ```
+Extracts data from an external resource at 17:00 every day, because
+"Base rates are usually updated at about 16:00 Central European time every business day" © ECB
+ 
