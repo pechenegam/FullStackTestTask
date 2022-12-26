@@ -16,19 +16,6 @@ services:
     networks:
       - network
 
-#  app:
-#    build:
-#      context: .
-#      dockerfile: ./Dockerfile
-#    container_name: app
-#    depends_on:
-#      - postgres
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      - network
-
-
 networks:
   network:
     driver: bridge
