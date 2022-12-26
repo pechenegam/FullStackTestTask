@@ -29,7 +29,7 @@ ____
 | /api/v1/exchange | authorized users  | GET |
 ____
 ## application.properties file
-in the line of the properties file
+In the line of the properties file
 ```
  exchange.cron=0 0 17 ? * *
  ```
