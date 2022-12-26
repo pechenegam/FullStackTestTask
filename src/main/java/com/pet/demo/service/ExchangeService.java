@@ -31,15 +31,14 @@ public class ExchangeService {
 
     private final ExchangeProperties exchangeProperties;
 
-    @PostConstruct
+
     public List<ExchangeRate> getExchanges() {
         List<ExchangeRate> exchangeRates = exchangeRepository.findByEcbDate(toDay());
 
         if (exchangeRates.isEmpty()) {
             ExchangeRate latestRate = exchangeRepository.findFirstByOrderByEcbDateDesc();
-
-            if (latestRate == null || !(toDay().equals(latestRate.getEcbDate()))) {
-                exchangeRates = loadExchanges(latestRate);
+            if (latestRate == null) {
+                exchangeRates = loadExchanges();
             } else {
                 exchangeRates = exchangeRepository.findByEcbDate(latestRate.getEcbDate());
             }
@@ -47,15 +46,13 @@ public class ExchangeService {
         return exchangeRates;
     }
 
-    public List<ExchangeRate> loadExchanges(ExchangeRate latestRate) {
+    public List<ExchangeRate> loadExchanges() {
         Envelope block = getEnvelope();
         if (block == null) {
             return new ArrayList<>();
         } else {
             List<ExchangeRate> exchangeRates = exchangeRateMapper.destinationToSource(block);
-            if (latestRate == null || !latestRate.getEcbDate().equals(exchangeRates.get(0).getEcbDate())) {
-                exchangeRepository.saveAll(exchangeRates);
-            }
+            exchangeRepository.saveAll(exchangeRates);
             return exchangeRates;
         }
     }
